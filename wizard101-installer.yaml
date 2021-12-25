@@ -1,0 +1,53 @@
+draft: true
+version: Latest-DXVK-64Bit
+name: Wizard101
+game_slug: wizard101
+runner: wine
+published: false
+slug: wizard101
+
+script: 
+    files:
+        -   wizard101setup: https://edgecast.wizard101.com/InstallWizard101.exe
+    game: 
+        arch: win64
+        exe: drive_c/ProgramData/KingsIsle Entertainment/Wizard101/Wizard101.exe
+        prefix: $GAMEDIR
+    installer:
+    -   task: 
+            arch: win64
+            name: create_prefix
+            prefix: $GAMEDIR
+    -  task: 
+            app: corefonts
+            description: Installing Corefonts
+            name: winetricks 
+            prefix: $GAMEDIR
+    -   task: 
+            app: dxvk
+            description: Installing DXVK
+            name: winetricks
+            prefix: $GAMEDIR
+    -   task:
+            prefix: $GAMEDIR
+            description: Installing Game
+            executable: $CACHE/wizard101setup/InstallWizard101.exe
+            name: wineexec
+    wine:
+        dxvk: true
+        esync: true
+        fsync: true
+    system:
+        env:
+            DXVK_LOG_LEVEL: none
+            DXVK_ASYNC: 1
+            MANGOHUD: 1
+            ENABLE_VKBASALT: 1
+            WINE_DISABLE_FAST_SYNC: 1
+            RADV_TEX_ANISO: 16
+            AMD_TEX_ANISO: 16
+            EQAA: 8,8,8
+            RADV_PERFTEST: sam
+            WINEDEBUG: -all
+            
+    
